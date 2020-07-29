@@ -24,48 +24,102 @@
           </v-btn>
         </v-app-bar>
         <v-container fluid>
-          <v-row>
-            <v-col cols="2" class="hidden-md-and-down">
-              <h3> Instructions</h3>
-              <v-card>
-                <p class="mx-3">Fill out <b>Market Demand</b> and <b>Capacity</b> for all Stations and <b>click the Cycle Button</b> to step through the process. </p><p class="mx-3"><b>Click Clear</b> to reset the game. </p><p class="mx-3">You are free to modify the <b>Capacity</b> during the game. </p><p class="mx-3">The Output will reset to 0 at 100 Beads. </p>
-              </v-card>
-            </v-col>
-              <v-col cols="10">
-                <v-row>
-                  <v-col v-for="i in 7" outlined tile v-bind:key="i.text">
-                    <v-card v-if="(i===2 || i===3 || i===4 || i===5 || i===6)">
-                       <h3 class="text-center">Station {{i-1}}</h3>
-                      <v-text-field v-if="(i===2)" v-model.number="station1.capacity" name="station1" text-align="center" label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
-                      <v-text-field v-if="(i===3)" v-model.number="station2.capacity" name="station2" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
-                      <v-text-field v-if="(i===4)" v-model.number="station3.capacity" name="station3" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
-                      <v-text-field v-if="(i===5)" v-model.number="station4.capacity" name="station4" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
-                      <v-text-field v-if="(i===6)" v-model.number="station5.capacity" name="station5" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
-                      <p v-if="(i===2)" class="ml-3"><b>Capacity: {{ station1.capacity }} </br> Incoming: {{ station1.win }} </br> Wip: {{ station1.wip }} </br> Outgoing: {{ station1.out }}</b></p>
-                      <p v-if="(i===3)" class="ml-3"><b>Capacity: {{ station2.capacity }} </br> Incoming: {{ station2.win }} </br> Wip: {{ station2.wip }} </br> Outgoing: {{ station2.out }}</b></p>
-                      <p v-if="(i===4)" class="ml-3"><b>Capacity: {{ station3.capacity }} </br> Incoming: {{ station3.win }} </br> Wip: {{ station3.wip }} </br> Outgoing: {{ station3.out }}</b></p>
-                      <p v-if="(i===5)" class="ml-3"><b>Capacity: {{ station4.capacity }} </br> Incoming: {{ station4.win }} </br> Wip: {{ station4.wip }} </br> Outgoing: {{ station4.out }}</b></p>
-                      <p v-if="(i===6)" class="ml-3"><b>Capacity: {{ station5.capacity }} </br> Incoming: {{ station5.win }} </br> Wip: {{ station5.wip }} </br> Outgoing: {{ station5.out }}</b></p>
+                 <v-col cols="10" class="md-and-down hidden-lg-and-up">
+                    <h3> Instructions</h3>
+                    <v-card>
+                       <p class="mx-3">Fill out <b>Market Demand</b> and <b>Capacity</b> for all Stations and <b>click the Cycle Button</b> to step through the process.
+                       <b>Click Clear</b> to reset the game.
+                       You are free to modify the <b>Capacity</b> during the game.
+                       The Output will reset to 0 at 100 Beads. </p>
                     </v-card>
-                    <v-card v-if="(i===1 || i===7)" height="5rem">
-                      <h3 v-if="i===1" align="center">Input</h3>
-                        <v-text-field v-if="i===1" v-model="beadNew" name="beadNew" id="beadNew" text-align="center"label="Market Demand" hide-details="auto" filled shaped dense></v-text-field>
-                        <p v-if="i===1">{{ beadNew }}</p>
-                        <h3 v-if="i===7" align="center">Output: {{ beadsOutput }}</h3>
-                        <p></p>
-                        <v-btn v-if="i===7" @click="cycle()" block align="center" color="internal-light-dark">Cycle Button</v-btn>
-                        <v-btn v-if="i===7" @click="clear()" block align="center" color="internal-light-dark">Clear Button</v-btn>
-                      </h3>
-                    </v-card>
-                  </v-col>
-                </v-row>
-              <v-col cols="12" class="hidden-md-and-down">
-                <v-row id="theWidth">
-                  <div id="idnameofdiv"></div>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
+                 </v-col>
+                  <v-row>
+                     <v-col cols="2" class="hidden-md-and-down md-and-up">
+                        <h3> Instructions</h3>
+                        <v-card>
+                           <p class="mx-3">Fill out <b>Market Demand</b> and <b>Capacity</b> for all Stations and <b>click the Cycle Button</b> to step through the process. </p>
+                           <p class="mx-3"><b>Click Clear</b> to reset the game. </p>
+                           <p class="mx-3">You are free to modify the <b>Capacity</b> during the game. </p>
+                           <p class="mx-3">The Output will reset to 0 at 100 Beads. </p>
+                        </v-card>
+                     </v-col>
+
+                     <v-col cols="10" id="smallScreen" class="hidden-sm-and-down md-and-up">
+                        <v-row>
+                           <v-col v-for="i in 7" outlined tile v-bind:key="i.text">
+                              <v-card v-if="(i===2 || i===3 || i===4 || i===5 || i===6)">
+                                 <h3 class="text-center">Station {{i-1}}</h3>
+                                 <v-text-field v-if="(i===2)" v-model.number="station1.capacity" name="station1" text-align="center" label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(i===3)" v-model.number="station2.capacity" name="station2" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(i===4)" v-model.number="station3.capacity" name="station3" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(i===5)" v-model.number="station4.capacity" name="station4" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(i===6)" v-model.number="station5.capacity" name="station5" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <p v-if="(i===2)" class="ml-3"><b>Capacity: {{ station1.capacity }} </br> Incoming: {{ station1.win }} </br> Wip: {{ station1.wip }} </br> Outgoing: {{ station1.out }}</b></p>
+                                 <p v-if="(i===3)" class="ml-3"><b>Capacity: {{ station2.capacity }} </br> Incoming: {{ station2.win }} </br> Wip: {{ station2.wip }} </br> Outgoing: {{ station2.out }}</b></p>
+                                 <p v-if="(i===4)" class="ml-3"><b>Capacity: {{ station3.capacity }} </br> Incoming: {{ station3.win }} </br> Wip: {{ station3.wip }} </br> Outgoing: {{ station3.out }}</b></p>
+                                 <p v-if="(i===5)" class="ml-3"><b>Capacity: {{ station4.capacity }} </br> Incoming: {{ station4.win }} </br> Wip: {{ station4.wip }} </br> Outgoing: {{ station4.out }}</b></p>
+                                 <p v-if="(i===6)" class="ml-3"><b>Capacity: {{ station5.capacity }} </br> Incoming: {{ station5.win }} </br> Wip: {{ station5.wip }} </br> Outgoing: {{ station5.out }}</b></p>
+                              </v-card>
+                              <v-card v-if="(i===1 || i===7)" height="5rem">
+                                 <h3 v-if="i===1" align="center">Input</h3>
+                                 <v-text-field v-if="i===1" v-model="beadNew" name="beadNew" id="beadNew" text-align="center"label="Market Demand" hide-details="auto" filled shaped dense></v-text-field>
+                                 <p v-if="(i===1)"><b>Input: {{ beadNew }}</b></p>
+                                 <h3 v-if="(i===7)" align="center">Output: {{ beadsOutput }}</h3>
+                                 <p></p>
+                                 <v-btn v-if="(i===7)" @click="cycle()" block align="center" color="internal-light-dark">Cycle Button</v-btn>
+                                 <v-btn v-if="(i===7)" @click="clear()" block align="center" color="internal-light-dark">Clear Button</v-btn>
+                              </v-card>
+                           </v-col>
+                           <v-col cols="12" class="hidden-sm-and-down md-and-up">
+                              <v-row id="theWidth">
+                                 <div id="idnameofdiv"></div>
+                              </v-row>
+                           </v-col>
+                        </v-row>
+                     </v-col>
+                     <v-col cols="10" id="smallScreen" class="sm-and-down hidden-md-and-up">
+                        <v-row>
+                           <v-col v-for="i in 3" outlined tile v-bind:key="i.text">
+                              <v-card v-if="(i===1)">
+                                 <h3 class="text-center">Market</h3>
+                                 <v-text-field v-if="(i===1)" v-model="beadNew" name="beadNew" id="beadNew" text-align="center"label="Market Demand" hide-details="auto" filled shaped dense></v-text-field>
+                                 <p v-if="(i===1)"><b>Input: {{ beadNew }}</b></p>
+                              </v-card>
+                              <v-card v-if="(i===2 || i===3)">
+                                 <h3 class="text-center">Station {{i-1}}</h3>
+                                 <v-text-field v-if="(i===2)" v-model.number="station1.capacity" name="station1" text-align="center" label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(i===3)" v-model.number="station2.capacity" name="station2" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <p v-if="(i===2)" class="ml-3"><b>Capacity: {{ station1.capacity }} </br> Incoming: {{ station1.win }} </br> Wip: {{ station1.wip }} </br> Outgoing: {{ station1.out }}</b></p>
+                                 <p v-if="(i===3)" class="ml-3"><b>Capacity: {{ station2.capacity }} </br> Incoming: {{ station2.win }} </br> Wip: {{ station2.wip }} </br> Outgoing: {{ station2.out }}</b></p>
+                              </v-card>
+                           </v-col>
+                        </v-row>
+                        <v-row>
+                           <v-col v-for="j in 3" outlined tile v-bind:key="j.text">
+                              <v-card v-if="(j===1 || j===2 || j===3)">
+                                 <h3 class="text-center">Station {{j+2}}</h3>
+                                 <v-text-field v-if="(j===1)" v-model.number="station3.capacity" name="station3" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(j===2)" v-model.number="station4.capacity" name="station4" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <v-text-field v-if="(j===3)" v-model.number="station5.capacity" name="station5" text-align="center"label="Capacity" hide-details="auto" filled shaped dense></v-text-field>
+                                 <p v-if="(j===1)" class="ml-3"><b>Capacity: {{ station3.capacity }} </br> Incoming: {{ station3.win }} </br> Wip: {{ station3.wip }} </br> Outgoing: {{ station3.out }}</b></p>
+                                 <p v-if="(j===2)" class="ml-3"><b>Capacity: {{ station4.capacity }} </br> Incoming: {{ station4.win }} </br> Wip: {{ station4.wip }} </br> Outgoing: {{ station4.out }}</b></p>
+                                 <p v-if="(j===3)" class="ml-3"><b>Capacity: {{ station5.capacity }} </br> Incoming: {{ station5.win }} </br> Wip: {{ station5.wip }} </br> Outgoing: {{ station5.out }}</b></p>
+                              </v-card>
+                           </v-col>
+                        </v-row>
+                        <v-row>
+                           <v-col outlined tile>
+                              <v-card>
+                                 <h3 align="center">Output: {{ beadsOutput }}</h3>
+                                 <p></p>
+                                 <v-btn @click="cycle()" block align="center" color="internal-light-dark">Cycle Button</v-btn>
+                                 <v-btn @click="clear()" block align="center" color="internal-light-dark">Clear Button</v-btn>
+                              </v-card>
+                           </v-col>
+                        </v-row>
+                     </v-col>
+                  </v-row>
+               </v-container>
         </v-main>
       <v-footer fixed="fixed" app>
         <span>&copy; 2020 - Made with 💙 by <a href="https://www.linkedin.com/in/georgedekker/" target="_blank">George Dekker</a></span>
